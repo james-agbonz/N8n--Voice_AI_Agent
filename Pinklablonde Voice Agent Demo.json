@@ -1,0 +1,1782 @@
+{
+  "name": "Pinklablonde Voice Agent (Demo)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "salon-agent",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -672,
+        768
+      ],
+      "id": "a66f87d2-40ec-4a9a-8025-2e3755a2c176",
+      "webhookId": "dad57cc9-167b-4b7a-bcf2-bd015b460d82"
+    },
+    {
+      "parameters": {
+        "jsCode": "const msg=$json.body.message;\nconst call=msg.toolCalls[0];\nreturn [{json:{toolCallId:call.id,functionName:call.function.name,\n  args: typeof call.function.arguments==='string' ? JSON.parse(call.function.arguments) : call.function.arguments}}];"
+      },
+      "name": "Extract Tool Call",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -448,
+        768
+      ],
+      "id": "35eeda73-9398-4d63-8c94-dcb9498120bf"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "get_service_info",
+                    "leftValue": "={{ $json.functionName }}",
+                    "rightValue": "get_service_info",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "get_service_info"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "check_availability",
+                    "leftValue": "={{ $json.functionName }}",
+                    "rightValue": "check_availability",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "check_availability"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "book_appointment",
+                    "leftValue": "={{ $json.functionName }}",
+                    "rightValue": "book_appointment",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "book_appointment"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "find_appointment",
+                    "leftValue": "={{ $json.functionName }}",
+                    "rightValue": "find_appointment",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "find_appointment"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "reschedule_appointment",
+                    "leftValue": "={{ $json.functionName }}",
+                    "rightValue": "reschedule_appointment",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "reschedule_appointment"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "cancel_appointment",
+                    "leftValue": "={{ $json.functionName }}",
+                    "rightValue": "cancel_appointment",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "cancel_appointment"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "check_inventory",
+                    "leftValue": "={{ $json.functionName }}",
+                    "rightValue": "check_inventory",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "check_inventory"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "take_message",
+                    "leftValue": "={{ $json.functionName }}",
+                    "rightValue": "take_message",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "take_message"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Route Tool",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -224,
+        768
+      ],
+      "id": "4764c9e6-51df-4001-99b4-6a2536177845"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0",
+          "mode": "list",
+          "cachedResultName": "Salon list",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 654419088,
+          "mode": "list",
+          "cachedResultName": "Services",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0/edit#gid=654419088"
+        },
+        "options": {}
+      },
+      "name": "Read Services",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        32,
+        48
+      ],
+      "id": "1e589ac0-fb2b-459e-8800-569cab8792bd",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RoBJ6t6Di0HeA3L4",
+          "name": "Google Sheets account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const q=$('Extract Tool Call').first().json.args.query.toLowerCase();\nconst rows=$input.all().map(i=>i.json);\nconst hit=rows.find(r=>String(r.service_id).toLowerCase()===q||\n  String(r.service_name_fr).toLowerCase().includes(q)||\n  String(r.service_name_en).toLowerCase().includes(q));\nif(!hit) return [{json:{result:`No service found matching \"${q}\".`}}];\nlet out=`${hit.service_name_en} / ${hit.service_name_fr} - ${hit.duration_min} min. `+\n  `Prices: Nouveau-Talent ${hit.price_nouveau_talent}$, Specialiste ${hit.price_specialiste}$, `+\n  `Senior ${hit.price_senior}$, Maitre ${hit.price_maitre}$, plus ${hit.green_fee}$ eco-fee and taxes.`;\nif(hit.requires_consultation==='Yes') out+=' A free colour consultation is required first for new clients.';\nreturn [{json:{result:out}}];"
+      },
+      "name": "Match Service",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        256,
+        48
+      ],
+      "id": "2df3e841-8412-4f26-8043-ee8968caad6f"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "66e9831fd2c03a1bee27de6e4194ea4c14c2494a87c0d8f64ce7f1fc570e688e@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "Salon demo"
+        },
+        "returnAll": true,
+        "options": {}
+      },
+      "name": "Get Calendar Events",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        32,
+        208
+      ],
+      "alwaysOutputData": true,
+      "id": "ff10d9ef-f609-4804-9eef-4478ec35e3d8",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "4BgKR3YzgGqhb9Jh",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const args=$('Extract Tool Call').first().json.args;\nconst DUR={SVC001:60,SVC002:90,SVC003:120,SVC004:105,SVC005:120,SVC006:180,SVC007:240,SVC008:180,SVC009:240,SVC010:180,SVC011:240,SVC012:45,SVC013:75,SVC014:30,SVC015:30,SVC016:45,SVC017:15,SVC018:20};\nconst STY={STY001:{name:'Camille Tremblay',tier:'Nouveau-Talent',start:10,end:18,days:[2,3,4,5,6]},\n  STY002:{name:'Sophie Nguyen',tier:'Spécialiste',start:9,end:17,days:[2,3,4,5,6]},\n  STY003:{name:'Isabelle Roy',tier:'Sénior',start:10,end:19,days:[3,4,5,6]},\n  STY004:{name:'Marc-André Fortin',tier:'Maître',start:10,end:18,days:[3,4,5]}};\nlet id=args.stylist_id;\nif(!id&&args.tier) id=Object.keys(STY).find(k=>STY[k].tier===args.tier);\nif(!id) id='STY002';\nconst s=STY[id];\nconst dur=DUR[args.service_id]||60;\nconst day=new Date(args.date+'T12:00:00').getDay();\nif(!s.days.includes(day)) return [{json:{result:`${s.name} does not work on that day. Please suggest another date.`}}];\nconst events=$input.all().map(i=>i.json).filter(e=>e&&e.summary&&e.start&&e.start.dateTime&&e.summary.includes(s.name.split(' ')[0]));\nconst busy=events.map(e=>[new Date(e.start.dateTime).getTime(),new Date(e.end.dateTime).getTime()]);\nconst pad=n=>String(n).padStart(2,'0');\nconst slots=[];\nfor(let m=s.start*60;m+dur<=s.end*60;m+=30){\n  const st=new Date(`${args.date}T${pad(Math.floor(m/60))}:${pad(m%60)}:00`).getTime();\n  if(!busy.some(([b1,b2])=>st<b2&&st+dur*60000>b1)) slots.push(new Date(st));\n  if(slots.length>=3) break;\n}\nif(!slots.length) return [{json:{result:`No openings for ${s.name} on ${args.date}. Suggest trying another day.`}}];\nconst fmt=d=>`${pad(d.getHours())}:${pad(d.getMinutes())}`;\nreturn [{json:{result:`${s.name} (${s.tier}) has openings on ${args.date} at: ${slots.map(fmt).join(', ')}. The service takes ${dur} minutes.`,stylist_id:id}}];"
+      },
+      "name": "Compute Free Slots",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        256,
+        208
+      ],
+      "id": "b02bf4a6-d929-4246-abea-dcc9d899f0e5"
+    },
+    {
+      "parameters": {
+        "jsCode": "const args=$('Extract Tool Call').first().json.args;\nconst DUR={SVC001:60,SVC002:90,SVC003:120,SVC004:105,SVC005:120,SVC006:180,SVC007:240,SVC008:180,SVC009:240,SVC010:180,SVC011:240,SVC012:45,SVC013:75,SVC014:30,SVC015:30,SVC016:45,SVC017:15,SVC018:20};\nconst SVC={SVC001:'toner/gloss',SVC002:'root colour',SVC003:'global colour',SVC004:'rootmelt',SVC005:'face framing',SVC006:'sunkissed balayage',SVC007:'go lighter balayage',SVC008:'half-head babylights',SVC009:'full-head babylights',SVC010:'half-head foilyage',SVC011:'full-head foilyage',SVC012:'blowout',SVC013:'cut and blowout',SVC014:'Olaplex treatment',SVC015:'Fusio-Dose treatment',SVC016:'Olaplex + Fusio-Dose',SVC017:'Eden Experience add-on',SVC018:'colour consultation'};\nconst STYN={STY001:'Camille Tremblay',STY002:'Sophie Nguyen',STY003:'Isabelle Roy',STY004:'Marc-André Fortin'};\nconst dur=DUR[args.service_id]||60;\nconst pad=n=>String(n).padStart(2,'0');\nconst start=new Date(`${args.date}T${args.start_time}:00`);\nconst end=new Date(start.getTime()+dur*60000);\nconst iso=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}:00`;\nconst sty=STYN[args.stylist_id]||args.stylist_id;\nreturn [{json:{...args,appointment_id:'APT'+Date.now(),service_name:SVC[args.service_id]||args.service_id,\n  stylist_name:sty,startISO:iso(start),endISO:iso(end),\n  end_time:`${pad(end.getHours())}:${pad(end.getMinutes())}`,\n  summary:`${args.client_name} - ${SVC[args.service_id]||args.service_id} (${sty})`}}];"
+      },
+      "name": "Prepare Booking",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        32,
+        368
+      ],
+      "id": "901b1ee5-c9a1-4e20-b34b-add548855702"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "66e9831fd2c03a1bee27de6e4194ea4c14c2494a87c0d8f64ce7f1fc570e688e@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "Salon demo"
+        },
+        "start": "={{ $json.startISO }}",
+        "end": "={{ $json.endISO }}",
+        "additionalFields": {
+          "description": "={{ 'Phone: ' + $json.client_phone + ' | ' + ($json.notes || '') }}",
+          "summary": "={{ $json.summary }}"
+        }
+      },
+      "name": "Create Calendar Event",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        256,
+        368
+      ],
+      "id": "a29e423c-1540-4884-9afe-ddb011681b37",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "4BgKR3YzgGqhb9Jh",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const b=$('Prepare Booking').first().json;\nreturn [{json:{appointment_id:b.appointment_id,client_name:b.client_name,client_phone:b.client_phone,\n  service_id:b.service_id,stylist_id:b.stylist_id,date:b.date,start_time:b.start_time,\n  end_time:b.end_time,status:'confirmed',notes:b.notes||'',event_id:$json.id||''}}];"
+      },
+      "name": "Build Appointment Row",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        368
+      ],
+      "id": "a4a422c0-0251-46fe-8573-c8e45412b0fa"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0",
+          "mode": "list",
+          "cachedResultName": "Salon list",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 469520092,
+          "mode": "list",
+          "cachedResultName": "Appointments",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0/edit#gid=469520092"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "appointment_id",
+              "displayName": "appointment_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "client_name",
+              "displayName": "client_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "client_phone",
+              "displayName": "client_phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "service_id",
+              "displayName": "service_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "stylist_id",
+              "displayName": "stylist_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "start_time",
+              "displayName": "start_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "end_time",
+              "displayName": "end_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "notes",
+              "displayName": "notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "event_id",
+              "displayName": "event_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "name": "Append Appointment",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        704,
+        368
+      ],
+      "id": "9e77432d-f470-4cca-a5a0-673b9e41686a",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RoBJ6t6Di0HeA3L4",
+          "name": "Google Sheets account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const b=$('Prepare Booking').first().json;\nreturn [{json:{result:`Booked: ${b.service_name} with ${b.stylist_name} on ${b.date} at ${b.start_time}. Confirmation ID ${b.appointment_id}.`}}];"
+      },
+      "name": "Booking Confirmation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        912,
+        368
+      ],
+      "id": "804afbf4-f5f6-4bc0-986e-420d684e85bd"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0",
+          "mode": "list",
+          "cachedResultName": "Salon list",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 469520092,
+          "mode": "list",
+          "cachedResultName": "Appointments",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0/edit#gid=469520092"
+        },
+        "options": {}
+      },
+      "name": "Read Appointments (Find)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        32,
+        528
+      ],
+      "id": "073d9653-c8b0-44d5-9813-52c706374213",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RoBJ6t6Di0HeA3L4",
+          "name": "Google Sheets account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const args=$('Extract Tool Call').first().json.args;\nconst SVC={SVC001:'toner/gloss',SVC002:'root colour',SVC003:'global colour',SVC004:'rootmelt',SVC005:'face framing',SVC006:'sunkissed balayage',SVC007:'go lighter balayage',SVC008:'half-head babylights',SVC009:'full-head babylights',SVC010:'half-head foilyage',SVC011:'full-head foilyage',SVC012:'blowout',SVC013:'cut and blowout',SVC014:'Olaplex treatment',SVC015:'Fusio-Dose treatment',SVC016:'Olaplex + Fusio-Dose',SVC017:'Eden Experience add-on',SVC018:'colour consultation'};\nconst STYN={STY001:'Camille Tremblay',STY002:'Sophie Nguyen',STY003:'Isabelle Roy',STY004:'Marc-André Fortin'};\nconst digits=s=>String(s||'').replace(/\\D/g,'');\nconst q=digits(args.client_phone);\nlet rows=$input.all().map(i=>i.json).filter(r=>digits(r.client_phone)===q&&r.status!=='cancelled');\nif(args.date) rows=rows.filter(r=>r.date===args.date);\nif(!rows.length) return [{json:{result:'No upcoming appointment found for that phone number.'}}];\nconst r=rows[0];\nreturn [{json:{result:`Found: ${SVC[r.service_id]||r.service_id} with ${STYN[r.stylist_id]||r.stylist_id} on ${r.date} at ${r.start_time}. Confirmation ID ${r.appointment_id}.`,...r}}];"
+      },
+      "name": "Filter By Phone",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        256,
+        528
+      ],
+      "id": "bc13b3a6-6805-46f1-a1f0-36e23b2c029b"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0",
+          "mode": "list",
+          "cachedResultName": "Salon list",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 469520092,
+          "mode": "list",
+          "cachedResultName": "Appointments",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0/edit#gid=469520092"
+        },
+        "options": {}
+      },
+      "name": "Read Appointments (Resched)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        32,
+        688
+      ],
+      "id": "55dec889-8a45-4d6e-8098-60063e4675f8",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RoBJ6t6Di0HeA3L4",
+          "name": "Google Sheets account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const args=$('Extract Tool Call').first().json.args;\nconst DUR={SVC001:60,SVC002:90,SVC003:120,SVC004:105,SVC005:120,SVC006:180,SVC007:240,SVC008:180,SVC009:240,SVC010:180,SVC011:240,SVC012:45,SVC013:75,SVC014:30,SVC015:30,SVC016:45,SVC017:15,SVC018:20};\nconst rows=$input.all().map(i=>i.json);\nconst r=rows.find(x=>x.appointment_id===args.appointment_id);\nif(!r) return [{json:{result:`No appointment found with ID ${args.appointment_id}.`,appointment_id:args.appointment_id}}];\nconst dur=DUR[r.service_id]||60;\nconst pad=n=>String(n).padStart(2,'0');\nconst start=new Date(`${args.new_date}T${args.new_start_time}:00`);\nconst end=new Date(start.getTime()+dur*60000);\nreturn [{json:{...r,date:args.new_date,start_time:args.new_start_time,end_time:`${pad(end.getHours())}:${pad(end.getMinutes())}`}}];"
+      },
+      "name": "Build Reschedule",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        256,
+        688
+      ],
+      "id": "d7d1e613-a291-4b52-aebc-3da2e5a9e77a"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0",
+          "mode": "list",
+          "cachedResultName": "Salon list",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 469520092,
+          "mode": "list",
+          "cachedResultName": "Appointments",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0/edit#gid=469520092"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "appointment_id"
+          ],
+          "schema": [
+            {
+              "id": "appointment_id",
+              "displayName": "appointment_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "client_name",
+              "displayName": "client_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "client_phone",
+              "displayName": "client_phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "service_id",
+              "displayName": "service_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "stylist_id",
+              "displayName": "stylist_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "start_time",
+              "displayName": "start_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "end_time",
+              "displayName": "end_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "notes",
+              "displayName": "notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "name": "Update Appointment Row",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        480,
+        688
+      ],
+      "id": "b3e907e1-b3ac-4981-b041-bc1f5901ba58",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RoBJ6t6Di0HeA3L4",
+          "name": "Google Sheets account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "calendar": {
+          "__rl": true,
+          "value": "66e9831fd2c03a1bee27de6e4194ea4c14c2494a87c0d8f64ce7f1fc570e688e@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "Salon demo"
+        },
+        "eventId": "={{ $('Build Reschedule').first().json.event_id }}",
+        "updateFields": {
+          "end": "={{ $('Build Reschedule').first().json.date + 'T' + $('Build Reschedule').first().json.end_time + ':00' }}",
+          "start": "={{ $('Build Reschedule').first().json.date + 'T' + $('Build Reschedule').first().json.start_time + ':00' }}"
+        }
+      },
+      "name": "Update Calendar Event",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        704,
+        688
+      ],
+      "id": "455577f9-4002-4f60-9eb5-58db0c1c8887",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "4BgKR3YzgGqhb9Jh",
+          "name": "Google Calendar account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const r=$('Build Reschedule').first().json;\nif(!r.date) return [{json:{result:r.result}}];\nreturn [{json:{result:`Rescheduled ${r.appointment_id} to ${r.date} at ${r.start_time}.`}}];"
+      },
+      "name": "Reschedule Confirmation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        912,
+        688
+      ],
+      "id": "83e31bb8-bf1b-4df5-a502-1dda3276c168"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0",
+          "mode": "list",
+          "cachedResultName": "Salon list",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 469520092,
+          "mode": "list",
+          "cachedResultName": "Appointments",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0/edit#gid=469520092"
+        },
+        "options": {}
+      },
+      "name": "Read Appointments (Cancel)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        32,
+        848
+      ],
+      "id": "f6e7de52-265a-485a-8d78-8cfb34f8d3c3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RoBJ6t6Di0HeA3L4",
+          "name": "Google Sheets account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const args=$('Extract Tool Call').first().json.args;\nconst rows=$input.all().map(i=>i.json);\nconst r=rows.find(x=>x.appointment_id===args.appointment_id);\nif(!r) return [{json:{result:`No appointment found with ID ${args.appointment_id}.`,appointment_id:args.appointment_id}}];\nreturn [{json:{...r,status:'cancelled',notes:((r.notes||'')+' | Cancelled: '+(args.reason||'no reason given')).trim()}}];"
+      },
+      "name": "Build Cancellation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        256,
+        848
+      ],
+      "id": "f128f033-ab75-432e-8167-ad8ef3139801"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0",
+          "mode": "list",
+          "cachedResultName": "Salon list",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 469520092,
+          "mode": "list",
+          "cachedResultName": "Appointments",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0/edit#gid=469520092"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "appointment_id",
+              "displayName": "appointment_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "client_name",
+              "displayName": "client_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "client_phone",
+              "displayName": "client_phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "service_id",
+              "displayName": "service_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "stylist_id",
+              "displayName": "stylist_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "start_time",
+              "displayName": "start_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "end_time",
+              "displayName": "end_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "notes",
+              "displayName": "notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "event_id",
+              "displayName": "event_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "name": "Mark Row Cancelled",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        480,
+        848
+      ],
+      "id": "44a5035f-ba37-4a8d-8d74-bbbd5b598186",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RoBJ6t6Di0HeA3L4",
+          "name": "Google Sheets account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "66e9831fd2c03a1bee27de6e4194ea4c14c2494a87c0d8f64ce7f1fc570e688e@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "Salon demo"
+        },
+        "eventId": "={{ $('Build Cancellation').first().json.event_id }}",
+        "options": {}
+      },
+      "name": "Delete Calendar Event",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        704,
+        848
+      ],
+      "id": "c67633a1-202f-408f-972c-76621a82e4bc",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "4BgKR3YzgGqhb9Jh",
+          "name": "Google Calendar account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const r=$('Build Cancellation').first().json;\nif(r.status!=='cancelled') return [{json:{result:r.result}}];\nreturn [{json:{result:`Appointment ${r.appointment_id} has been cancelled.`}}];"
+      },
+      "name": "Cancel Confirmation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        912,
+        848
+      ],
+      "id": "bd204786-82b0-4a1b-bab2-eee3c5327d38"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0",
+          "mode": "list",
+          "cachedResultName": "Salon list",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1789315595,
+          "mode": "list",
+          "cachedResultName": "Inventory",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0/edit#gid=1789315595"
+        },
+        "options": {}
+      },
+      "name": "Read Inventory",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        32,
+        1008
+      ],
+      "id": "7f0efc51-add4-4736-bf48-20dca6a8b498",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RoBJ6t6Di0HeA3L4",
+          "name": "Google Sheets account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const args=$('Extract Tool Call').first().json.args;\nconst q=args.product_query.toLowerCase();\nconst rows=$input.all().map(i=>i.json);\nconst hit=rows.find(r=>String(r.product_name).toLowerCase().includes(q));\nif(!hit) return [{json:{result:`No product found matching \"${q}\".`,reserve:false}}];\nconst inStock=Number(hit.stock_qty)>0;\nconst price=hit.unit_price_cad?`, ${hit.unit_price_cad}$`:'';\nreturn [{json:{result:inStock?`${hit.product_name} is in stock (${hit.stock_qty} left${price}).`:`${hit.product_name} is currently sold out.`,\n  reserve:inStock&&!!args.reserve_for,sku:hit.sku,product_name:hit.product_name,\n  client_name:args.reserve_for||'',timestamp:new Date().toISOString()}}];"
+      },
+      "name": "Match Product",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        256,
+        1008
+      ],
+      "id": "c316b77d-0b8b-4732-9c94-9879bad9553c"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "res",
+              "leftValue": "={{ $json.reserve }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "name": "If Reserve",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        480,
+        1008
+      ],
+      "id": "b183f22c-59a3-4ad6-a1bf-ea8aa0797287"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0",
+          "mode": "list",
+          "cachedResultName": "Salon list",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1363370279,
+          "mode": "list",
+          "cachedResultName": "Reservations",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0/edit#gid=1363370279"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "timestamp",
+              "displayName": "timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sku",
+              "displayName": "sku",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "product_name",
+              "displayName": "product_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "client_name",
+              "displayName": "client_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "name": "Append Reservation",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        688,
+        960
+      ],
+      "id": "35ba9baf-5439-4a6b-adef-79c0d2152b9f",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RoBJ6t6Di0HeA3L4",
+          "name": "Google Sheets account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const g=$('Match Product').first().json;\nreturn [{json:{result:`${g.result} I have set one aside for ${g.client_name} to pick up at their appointment.`}}];"
+      },
+      "name": "Reservation Confirmation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        912,
+        960
+      ],
+      "id": "75d5e7f3-9660-4a39-bc1d-4e83e41069f9"
+    },
+    {
+      "parameters": {
+        "jsCode": "const a=$('Extract Tool Call').first().json.args;\nreturn [{json:{timestamp:new Date().toISOString(),client_name:a.client_name,\n  client_phone:a.client_phone,message:a.message}}];"
+      },
+      "name": "Prepare Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        32,
+        1168
+      ],
+      "id": "cceeb4fc-c5c8-40b8-8862-7e1939c6d6bc"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0",
+          "mode": "list",
+          "cachedResultName": "Salon list",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1289553402,
+          "mode": "list",
+          "cachedResultName": "Messages",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Zkv7_BN0yczTGkzL1a834eEAELoEBhE9QvLe8Q_k8T0/edit#gid=1289553402"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "timestamp",
+              "displayName": "timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "client_name",
+              "displayName": "client_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "client_phone",
+              "displayName": "client_phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "name": "Append Message",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        256,
+        1168
+      ],
+      "id": "9f8bd8bc-1e77-44c2-9de9-30f7426b6d30",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RoBJ6t6Di0HeA3L4",
+          "name": "Google Sheets account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{json:{result:'Message logged. A team member will call back within one business day.'}}];"
+      },
+      "name": "Message Confirmation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        1168
+      ],
+      "id": "92037668-90fe-40db-a493-4187361680b7"
+    },
+    {
+      "parameters": {
+        "jsCode": "const toolCallId=$('Extract Tool Call').first().json.toolCallId;\nconst result=$json.result||'Done.';\nreturn [{json:{results:[{toolCallId,result}]}}];"
+      },
+      "name": "Format Vapi Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1184,
+        768
+      ],
+      "id": "0d384587-8c5e-4786-b303-7504fea1d10b"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1392,
+        768
+      ],
+      "id": "b8fb8dee-1a47-422d-be22-fe38397f8515"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Extract Tool Call",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Tool Call": {
+      "main": [
+        [
+          {
+            "node": "Route Tool",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Tool": {
+      "main": [
+        [
+          {
+            "node": "Read Services",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Calendar Events",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepare Booking",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Read Appointments (Find)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Read Appointments (Resched)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Read Appointments (Cancel)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Read Inventory",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepare Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Services": {
+      "main": [
+        [
+          {
+            "node": "Match Service",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Match Service": {
+      "main": [
+        [
+          {
+            "node": "Format Vapi Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Calendar Events": {
+      "main": [
+        [
+          {
+            "node": "Compute Free Slots",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compute Free Slots": {
+      "main": [
+        [
+          {
+            "node": "Format Vapi Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Booking": {
+      "main": [
+        [
+          {
+            "node": "Create Calendar Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Calendar Event": {
+      "main": [
+        [
+          {
+            "node": "Build Appointment Row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Appointment Row": {
+      "main": [
+        [
+          {
+            "node": "Append Appointment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append Appointment": {
+      "main": [
+        [
+          {
+            "node": "Booking Confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Booking Confirmation": {
+      "main": [
+        [
+          {
+            "node": "Format Vapi Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Appointments (Find)": {
+      "main": [
+        [
+          {
+            "node": "Filter By Phone",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter By Phone": {
+      "main": [
+        [
+          {
+            "node": "Format Vapi Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Appointments (Resched)": {
+      "main": [
+        [
+          {
+            "node": "Build Reschedule",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Reschedule": {
+      "main": [
+        [
+          {
+            "node": "Update Appointment Row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Appointment Row": {
+      "main": [
+        [
+          {
+            "node": "Update Calendar Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Calendar Event": {
+      "main": [
+        [
+          {
+            "node": "Reschedule Confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reschedule Confirmation": {
+      "main": [
+        [
+          {
+            "node": "Format Vapi Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Appointments (Cancel)": {
+      "main": [
+        [
+          {
+            "node": "Build Cancellation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Cancellation": {
+      "main": [
+        [
+          {
+            "node": "Mark Row Cancelled",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark Row Cancelled": {
+      "main": [
+        [
+          {
+            "node": "Delete Calendar Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Calendar Event": {
+      "main": [
+        [
+          {
+            "node": "Cancel Confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cancel Confirmation": {
+      "main": [
+        [
+          {
+            "node": "Format Vapi Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Inventory": {
+      "main": [
+        [
+          {
+            "node": "Match Product",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Match Product": {
+      "main": [
+        [
+          {
+            "node": "If Reserve",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Reserve": {
+      "main": [
+        [
+          {
+            "node": "Append Reservation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Format Vapi Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append Reservation": {
+      "main": [
+        [
+          {
+            "node": "Reservation Confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reservation Confirmation": {
+      "main": [
+        [
+          {
+            "node": "Format Vapi Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Message": {
+      "main": [
+        [
+          {
+            "node": "Append Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append Message": {
+      "main": [
+        [
+          {
+            "node": "Message Confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message Confirmation": {
+      "main": [
+        [
+          {
+            "node": "Format Vapi Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Vapi Response": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "436daeb4-d292-4d03-ba96-b9a9c1da4801",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5a8244c3f09101785be898fc1a41196017c8459ccac5ad32e56ca5cd26756435"
+  },
+  "nodeGroups": [],
+  "id": "8gB3AIPZlbccWvtj",
+  "tags": []
+}
